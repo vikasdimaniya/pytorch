@@ -8,3 +8,7 @@ if torch.cuda.is_available():
 	y = y.to(device);
 	z = x + y
 	z = z.to("cpu")
+	print("Using CUDA")
+	print(z)
+else:
+	print("CUDA is not available")
