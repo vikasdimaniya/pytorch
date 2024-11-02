@@ -39,7 +39,7 @@ for epoch in range(n_iters):
     l = loss(Y, y_pred)
     
     # calculate gradients
-    dw = gradient(X, Y, y_pred)
+    dw =  (X, Y, y_pred)
 
     # update weights
     w -= learning_rate * dw
