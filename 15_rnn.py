@@ -95,7 +95,8 @@ def predict(input_line):
     with torch.no_grad():
         line_tensor = line_to_tensor(input_line)
         hidden_tensor = rnn.init_hidden()
-        for i in range(input_line.size(0)):
+        print(input_line.size())
+        for i in range(line_tensor.size(0)):
             output, hidden_tensor = rnn(line_tensor[i], hidden_tensor)
         guess = category_from_output(output)
         print(guess)
