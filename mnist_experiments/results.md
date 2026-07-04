@@ -1,0 +1,9 @@
+**5 Key Patterns:**
+
+1. **Parameter count has nothing to do with speed** — MLP (420k params) trains in 8 seconds. RNN (21k params) takes 60 seconds. Speed is about whether computations run in parallel or sequentially. MLP does 5 giant matrix multiplies all at once. RNN does 28 small steps one after another, waiting for the previous result each time.
+2. **Exploit data structure = smaller model, same accuracy** — Feeding an image flat (784 pixels at once) needs a 79k-param network. Feeding it row-by-row (28 pixels, 28 steps) needs only 14k params and still reaches 97%. Same principle as CNN vs linear: use the structure of the data instead of brute-forcing it. Fewer params = smaller model to store and deploy.
+3. **Sequential steps are the real bottleneck** — RNN processes 28 steps where each depends on the previous (can't skip ahead). Reducing from 28 steps to 7 (by feeding 4 rows at a time) cut training time from 60s to 26s with the same accuracy. Fewer sequential dependencies = faster.
+4. **Gating mechanisms (LSTM/GRU) learn faster, not compute faster** — At matched parameter counts (~21k), LSTM hits 97% in 5 epochs (26s) vs vanilla RNN in 11 epochs (34s). Each LSTM epoch is slower (more math per step), but it needs far fewer epochs because gates selectively remember/forget across time steps.
+5. **CNN is the best architecture for images** — 44k params, 2 epochs, 11 seconds to reach 97.8%. Exploits spatial locality (small 5x5 filters), all positions computed in parallel, tiny model, fast training. When data has spatial structure, CNN wins on every metric.
+
+**Summary table** showing the 97% comparison results from the final run (model, params, epochs, train time).
